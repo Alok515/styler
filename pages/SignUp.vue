@@ -4,5 +4,6 @@
 <template>
   <div>
     <h1 class="text-3xl">Sign Up</h1>
+    <Dev />
   </div>
 </template>
