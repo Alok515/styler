@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
   <div>
-    <h1 class="text-3xl">Home</h1>
-    <Dev />
+    <h1 class="text-3xl">DeV Component</h1>
   </div>
+
 </template>
