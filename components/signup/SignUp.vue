@@ -1,5 +1,8 @@
 <script setup lang="ts">
-    import { Button } from '@/components/ui/button'
+    import { Button } from '@/components/ui/button';
+    import { userStore } from '~/store/userStore';
+
+    const title = ref("Sign Up");
     const signUpFields = reactive([
       { name: "name", type: "text", value: "" },
       { name: "email", type: "email", value: "" },
@@ -7,22 +10,25 @@
     ]);
 
     const extactValue = computed(() => {
-      return signUpFields.reduce((acc : { [key: string]: string }, field) => {
+      return signUpFields.reduce((acc : User | any, field) => {
         acc[field.name] = field.value
         return acc
       }, {});
     });
+
+    const { setUser } = userStore();
     const handleSignUp = (e: Event) : void => {
       e.preventDefault();
       console.log(extactValue.value);
-      alert(JSON.stringify(extactValue.value));
+      setUser(extactValue.value);
       signUpFields.forEach(field => field.value = "");
+      navigateTo("/");
     }
 </script>
 
 <template>
   <div>
-    <h1 class="text-3xl">DeV Component</h1>
+    <h1 class="text-2xl font-bold font-jersey text-center my-4">{{ title }}</h1>
     <form class="flex flex-col gap-2 justify-center items-center border-spacing-2 border rounded-sm w-[30%] mx-auto">
       <div v-for="field in signUpFields" :key="field.name" class="w-full px-2 py-4 flex items-center justify-center">
         <input :type="field.type" :id="field.name" :name="field.name" :placeholder="field.name"
