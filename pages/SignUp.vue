@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <div class="bg-gray-900 text-gray-400 w-full h-screen">
+  <div class="bg-slate-700 text-gray-400 w-full h-screen">
     <div>
       <SignupSignUp />
     </div>

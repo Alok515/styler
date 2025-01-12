@@ -83,6 +83,7 @@ module.exports = {
       fontFamily: {
         montserrat: ["Montserrat", "monospace"],
         jersey: ["Jersey 10", "sans-serif"],
+        lobster: ['Lobster', 'cursive'],
       }
     },
   },

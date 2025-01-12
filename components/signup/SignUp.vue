@@ -36,7 +36,7 @@
           class="border-none rounded bg-transparent text-gray-200 w-[80%] focus:outline-none focus:ring-0 focus:bg-slate-700 px-4 py-2"
         />
       </div>
-      <Button variant="outline" @click="handleSignUp" class="bg-gray-900 hover:bg-gray-700 hover:text-gray-100 my-4">Sign Up</Button>
+      <Button variant="outline" @click="handleSignUp" class="bg-slate-700 hover:bg-gray-700 hover:text-gray-100 my-4">Sign Up</Button>
     </form>
   </div>
 
