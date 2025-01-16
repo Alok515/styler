@@ -17,10 +17,18 @@
     });
 
     const { setUser } = userStore();
-    const handleSignUp = (e: Event) : void => {
+    const handleSignUp = async (e: Event) : Promise<void> => {
       e.preventDefault();
       console.log(extactValue.value);
       setUser(extactValue.value);
+      const response = await $fetch("/api/v1/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(extactValue.value),
+      });
+      console.log(response);
       signUpFields.forEach(field => field.value = "");
       navigateTo("/");
     }

@@ -5,12 +5,19 @@
         middleware: "auth"
     });
 
-    const { clearStore } = userStore();
+    const { clearStore, user } = userStore();
 
-    setTimeout(() => {
-        clearStore();
-        navigateTo("/signup");
-    }, 3000);
+    const logout: any  = await useFetch("/api/v1/auth/logout", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: {
+            email: user.email
+        }
+    });
+    clearStore();
+    navigateTo("/signUp");
 </script>
 
 <template>
