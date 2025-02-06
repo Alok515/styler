@@ -1,14 +1,20 @@
 <script setup lang="ts">
-  definePageMeta({
-    title: "Sign Up",
-    middleware: "redirect-to-home"
-  })
+import { userStore } from '~/store/userStore';
+
+definePageMeta({
+  title: "Home",
+  middleware: "auth"
+});
+
+const { user } = userStore();
+
 </script>
 
 <template>
-  <div class="bg-slate-700 text-gray-400 w-full h-screen">
-    <div>
-      <SignupSignUp />
-    </div>
+  <div class="bg-gray-900 h-screen text-center mt-8">
+    <h1 class="text-3xl">Welcome {{ user.name }}</h1>
+    <section>
+      <p>Hello!! Hope you are having a good day!</p>
+    </section>
   </div>
 </template>
