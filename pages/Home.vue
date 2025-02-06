@@ -15,7 +15,7 @@
   </template>
   
   <script setup lang="ts">
-import Background from '~/components/ui/button/Background.vue';
+  import Background from '~/components/ui/button/Background.vue';
 
   </script>
   
