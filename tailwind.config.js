@@ -23,8 +23,18 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: "#EC5A3C"
-
+        primary: "#EC5A3C",
+        pr: {
+          100: '#F4B09A',
+          200: '#F29A7F',
+          300: '#F18565',
+          400: '#F16F4A',
+          500: '#EC5A3C',
+          600: '#D94D35',
+          700: '#C8432D',
+          800: '#B33A26',
+          900: '#9C3120',
+        }
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

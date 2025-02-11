@@ -3,7 +3,10 @@ import { Button } from '@/components/ui/button';
 import Background from '~/components/ui/button/Background.vue';
 import { userStore } from '~/store/userStore';
 
-const title = ref("Sign Up");
+definePageMeta({
+    title: "Login"
+});
+
 const signUpFields = reactive([
     { name: "Email", type: "email", value: "" },
     { name: "Password", type: "password", value: "" },
@@ -11,16 +14,25 @@ const signUpFields = reactive([
 
 const extactValue = computed(() => {
     return signUpFields.reduce((acc: User | any, field) => {
-        acc[field.name] = field.value;
+        acc[field.type] = field.value;
         return acc;
     }, {});
 });
 
 const { setUser } = userStore();
-const handleSignUp = (e: Event): void => {
+const handleSignUp = async (e: Event): Promise<void> => {
     e.preventDefault();
     console.log(extactValue.value);
     setUser(extactValue.value);
+    const loginRes = await fetch("http://localhost:8180/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(extactValue.value),
+    });
+    const loginData = await loginRes.json();
+    console.log(loginData);
     signUpFields.forEach(field => field.value = "");
     navigateTo("/");
 }
@@ -40,7 +52,7 @@ const handleSignUp = (e: Event): void => {
                     <label for="Email" class="text-lg font-semibold mb-2 text-primary flex justify-start">Log in</label>
                     <input v-model="signUpFields[0].value" type="email" id="Email" name="Email"
                         placeholder="username/email"
-                        class="border-2 border-primary rounded bg-transparent text-gray-200 w-full focus:outline-none focus:ring-0 focus:bg-orange-700 px-4 py-2 mb-4" />
+                        class="border-2 border-primary rounded bg-transparent text-gray-800 w-full focus:outline-pr-700 focus:ring-0 px-4 py-2 mb-4" />
                 </div>
 
                 <!-- Password Input -->
@@ -48,7 +60,7 @@ const handleSignUp = (e: Event): void => {
                     <label for="Password" class="text-lg font-semibold mb-2 text-primary flex justify-start">Password</label>
                     <input v-model="signUpFields[1].value" type="password" id="Password" name="Password"
                         placeholder="Enter your password"
-                        class="border-2 border-primary rounded bg-transparent text-gray-200 w-full focus:outline-none focus:ring-0 focus:bg-orange-700 px-4 py-2 mb-1" />
+                        class="border-2 border-primary rounded bg-transparent text-gray-800 w-full focus:outline-pr-700 focus:ring-0 px-4 py-2 mb-1" />
                 </div>
 
                 <!-- Forget Password Link -->
@@ -58,10 +70,10 @@ const handleSignUp = (e: Event): void => {
 
                 <!-- Buttons Section -->
                 <div class="flex justify-between">
-                    <Button variant="outline" class=" text-white bg-primary hover:text-gray-100 px-8 mb-4">New
+                    <Button variant="outline" class=" text-white bg-primary hover:bg-pr-800 hover:shadow-lg hover:shadow-pr-600 px-8 mb-4">New
                         User</Button>
                     <Button variant="outline" @click="handleSignUp"
-                        class="bg-primary text-white hover:text-gray-100 mb-4 px-8">
+                        class="bg-primary text-white hover:bg-pr-800 hover:shadow-lg hover:shadow-pr-600 mb-4 px-8">
                         Submit
                     </Button>
                 </div>
