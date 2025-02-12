@@ -12,7 +12,7 @@ const signUpFields = reactive([
     { name: "Password", type: "password", value: "" },
 ]);
 
-const extactValue = computed(() => {
+const extractValue = computed(() => {
     return signUpFields.reduce((acc: User | any, field) => {
         acc[field.type] = field.value;
         return acc;
@@ -22,20 +22,49 @@ const extactValue = computed(() => {
 const { setUser } = userStore();
 const handleSignUp = async (e: Event): Promise<void> => {
     e.preventDefault();
-    console.log(extactValue.value);
-    setUser(extactValue.value);
+    console.log(extractValue.value);
+    setUser(extractValue.value);
     const loginRes = await fetch("http://localhost:8180/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(extactValue.value),
+        body: JSON.stringify(extractValue.value),
     });
     const loginData = await loginRes.json();
     console.log(loginData);
     signUpFields.forEach(field => field.value = "");
     navigateTo("/");
 }
+
+const addNewUser = async (e: Event): Promise<void> => {
+    e.preventDefault();
+    console.log("Registering user:", extractValue.value);
+
+    const registerRes = await fetch("http://localhost:8180/auth/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: extractValue.value.email,
+            password: extractValue.value.password,
+            userName: extractValue.value.email.split("@")[0], // Example: Extract username from email
+        }),
+    });
+
+    if (registerRes.ok) {
+        const registerData = await registerRes.json();
+        console.log("User registered successfully:", registerData);
+        alert("User registered successfully! Please login.");
+        signUpFields.forEach(field => field.value = ""); // Clear inputs
+    } else {
+        console.error("Registration failed:", await registerRes.text());
+        alert("Registration failed! User may already exist.");
+    }
+};
+
+
 </script>
 
 <template>
@@ -70,11 +99,11 @@ const handleSignUp = async (e: Event): Promise<void> => {
 
                 <!-- Buttons Section -->
                 <div class="flex justify-between">
-                    <Button variant="outline" class=" text-white bg-primary hover:bg-pr-800 hover:shadow-lg hover:shadow-pr-600 px-8 mb-4">New
+                    <Button @click="addNewUser" variant="outline" class=" text-white bg-primary hover:bg-pr-800 hover:shadow-lg hover:shadow-pr-600 px-8 mb-4">New
                         User</Button>
                     <Button variant="outline" @click="handleSignUp"
                         class="bg-primary text-white hover:bg-pr-800 hover:shadow-lg hover:shadow-pr-600 mb-4 px-8">
-                        Submit
+                        Login
                     </Button>
                 </div>
             </form>
